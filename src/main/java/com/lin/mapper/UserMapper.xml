@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.lin.model.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userid, username, password, position
+  </sql>
+  <select id="signReady" parameterType="Integer" resultType="Integer">
+    select id from sign where userid=#{userid} and subjectid=#{subjectid}
+  </select>
+  <insert id="sign" parameterType="java.lang.Integer">
+    insert into sign  values (0,#{userid},#{subjectid},now());
+  </insert>
+  <select id="score" parameterType="Integer" resultType="com.lin.model.Score">
+    select * from score where stuid=#{userid}
+  </select>
+  <select id="subject" parameterType="Integer" resultType="com.lin.model.Subject">
+    select * from subject where stuid=#{userid}
+  </select>
+  <select id="subjectSign" parameterType="Integer" resultType="com.lin.model.Subject">
+    select * from subject where stuid=#{userid} and state = 1
+  </select>
+  <update id="passwd">
+    update user set password =#{password} where userid=#{userid}
+  </update>
+  <select id="teacherName" parameterType="Integer" resultType="String">
+    select name from teacher where teacherid=#{teacherid}
+  </select>
+  <select id="material" parameterType="Integer" resultType="com.lin.model.Student">
+    select * from student where stuid=#{stuid}
+  </select>
+</mapper>

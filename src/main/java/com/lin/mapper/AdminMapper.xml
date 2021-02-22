@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lin.mapper.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.lin.model.User">
+    <id column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userid, username, password, position
+  </sql>
+  <select id="find" parameterType="Integer" resultType="Integer">
+    select userid from user where userid=#{userid}
+  </select>
+  <insert id="add">
+    insert into teacher values (#{userid},#{name},#{sex},#{birthday},#{phone},#{addr})
+  </insert>
+  <insert id="userAdd" >
+    insert into user values (#{userid},#{password},#{position},#{name})
+  </insert>
+  <delete id="del" parameterType="Integer">
+    delete from user where userid =#{userid}
+  </delete>
+  <update id="passwd">
+    update user set password =#{password} where userid=#{userid}
+  </update>
+  <select id="selectPasswd" parameterType="Integer" resultType="com.lin.model.User">
+    select * from user where userid =#{userid} and position='teacher' or position='center'
+  </select>
+  <select id="show" resultType="com.lin.model.User">
+    select * from user where position='teacher' or position='center'
+  </select>
+  <delete id="teacherDel" parameterType="Integer">
+    delete from teacher where teacherid=#{userid}
+  </delete>
+  <select id="teacher" parameterType="Integer" resultType="com.lin.model.Teacher">
+    select * from teacher where teacherid=#{userid}
+  </select>
+</mapper>
